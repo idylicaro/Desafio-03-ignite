@@ -6,3 +6,29 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Org {
+  id            String   @id @default(uuid())
+  name          String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  pets          Pet[]
+  email         String   @unique
+  password_hash String
+}
+
+model Pet {
+  id        String   @id @default(uuid())
+  name      String
+  color     String
+  height    Float
+  weight    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  org       Org      @relation(fields: [orgId], references: [id])
+  orgId     String
+}
+
+// TODO: create a org model
+
+// TODO: create a pet model
