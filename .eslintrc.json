@@ -4,7 +4,7 @@
     "es2021": true,
     "node": true
   },
-  "extends": ["@rocketseat/eslint-config/node", "prettier"],
+  "extends": ["@rocketseat/eslint-config/node"],
   "rules": {
     "camelcase": "off",
     "no-useless-constructor": "off"
