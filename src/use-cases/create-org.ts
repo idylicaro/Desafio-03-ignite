@@ -7,6 +7,11 @@ interface CreateOrgUseCaseRequest {
   name: string
   email: string
   password: string
+  address: string
+  address_number: string
+  city: string
+  state: string
+  phone: string
 }
 
 interface CreateOrgUseCaseResponse {
@@ -20,6 +25,11 @@ export class CreateOrgUseCase {
     name,
     email,
     password,
+    address,
+    address_number,
+    city,
+    state,
+    phone,
   }: CreateOrgUseCaseRequest): Promise<CreateOrgUseCaseResponse> {
     const password_hash = await hash(password, 10)
 
@@ -33,6 +43,11 @@ export class CreateOrgUseCase {
       name,
       email,
       password_hash,
+      address,
+      address_number,
+      city,
+      state,
+      phone,
     })
 
     return {
