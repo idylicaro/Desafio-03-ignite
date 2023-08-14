@@ -8,13 +8,18 @@ datasource db {
 }
 
 model Org {
-  id            String   @id @default(uuid())
-  name          String
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
-  pets          Pet[]
-  email         String   @unique
-  password_hash String
+  id             String   @id @default(uuid())
+  name           String
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+  pets           Pet[]
+  email          String   @unique
+  password_hash  String
+  address        String
+  address_number String
+  city           String
+  state          String
+  phone          String
 }
 
 model Pet {
@@ -28,7 +33,3 @@ model Pet {
   org       Org      @relation(fields: [orgId], references: [id])
   orgId     String
 }
-
-// TODO: create a org model
-
-// TODO: create a pet model
