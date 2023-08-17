@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  MEMBER
+}
+
 model Org {
   id             String   @id @default(uuid())
   name           String
@@ -20,6 +25,7 @@ model Org {
   city           String
   state          String
   phone          String
+  role           Role     @default(MEMBER)
 }
 
 model Pet {
