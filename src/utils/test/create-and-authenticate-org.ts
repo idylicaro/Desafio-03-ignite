@@ -7,7 +7,7 @@ export async function createAndAuthenticateOrg(
   app: FastifyInstance,
   isAdmin = false,
 ) {
-  await prisma.org.create({
+  const org = await prisma.org.create({
     data: {
       name: 'Pet org fundation',
       email: 'pet_org_fundation@org.com',
@@ -30,5 +30,6 @@ export async function createAndAuthenticateOrg(
 
   return {
     token,
+    id: org.id,
   }
 }
