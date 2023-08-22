@@ -6,16 +6,17 @@ import { OrgsByCityNotFoundError } from '@/use-cases/errors/org-by-city-not-foun
 
 export async function search(request: FastifyRequest, reply: FastifyReply) {
   const createQuerySchema = z.object({
-    query: z.string().min(3).max(255),
+    city: z.coerce.string().min(3).max(255),
+    age: z.coerce.number().min(1).max(100).optional(),
+    height: z.coerce.number().optional(),
+    weight: z.coerce.number().optional(),
   })
 
-  const { query } = createQuerySchema.parse(request.query)
+  const query = createQuerySchema.parse(request.query)
 
   try {
     const searchPetByCityUseCase = makeSearchPetByCityUseCase()
-    const pets = await searchPetByCityUseCase.execute({
-      query,
-    })
+    const pets = await searchPetByCityUseCase.execute({ query })
     return reply.status(200).send({ pets })
   } catch (err) {
     if (err instanceof QueryNotInformedError) {

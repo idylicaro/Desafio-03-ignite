@@ -5,7 +5,12 @@ import { OrgsRepository } from '@/repositories/orgs-repository'
 import { OrgsByCityNotFoundError } from './errors/org-by-city-not-found-error'
 
 interface SearchPetsByCityUseCaseRequest {
-  query: string
+  query: {
+    age?: number | undefined
+    height?: number | undefined
+    weight?: number | undefined
+    city: string
+  }
 }
 
 interface SearchPetsByCityUseCaseResponse {
@@ -21,18 +26,18 @@ export class SearchPetsByCityUseCase {
   async execute({
     query,
   }: SearchPetsByCityUseCaseRequest): Promise<SearchPetsByCityUseCaseResponse> {
-    if (!query) {
+    if (!query || !query.city) {
       throw new QueryNotInformedError()
     }
 
-    const orgs = await this.orgsRepository.findManyByCity(query)
+    const orgs = await this.orgsRepository.findManyByCity(query.city)
     if (orgs.length === 0) {
       throw new OrgsByCityNotFoundError()
     }
 
     const orgsId = orgs.map((item) => item.id)
 
-    const pets = await this.petsRepository.findManyForAdoption(orgsId)
+    const pets = await this.petsRepository.findManyForAdoption(orgsId, query)
 
     return { pets }
   }

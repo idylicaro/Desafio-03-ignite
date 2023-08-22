@@ -1,9 +1,11 @@
 import { prisma } from '@/lib/prisma'
 import { Prisma } from '@prisma/client'
-import { PetsRepository } from '../pets-repository'
-
+import { PetsRepository, Query } from '../pets-repository'
 export class PrismaPetsRepository implements PetsRepository {
-  findManyForAdoption(orgsId: string[]): Promise<
+  findManyForAdoption(
+    orgsId: string[],
+    query: Query,
+  ): Promise<
     {
       id: string
       name: string
@@ -22,6 +24,9 @@ export class PrismaPetsRepository implements PetsRepository {
           in: orgsId,
         },
         adopted_at: null,
+        age: query.age,
+        height: query.height,
+        weight: query.weight,
       },
     })
 

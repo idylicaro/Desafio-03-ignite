@@ -1,5 +1,5 @@
 import { Pet, Prisma } from '@prisma/client'
-import { PetsRepository } from '../pets-repository'
+import { PetsRepository, Query } from '../pets-repository'
 import { randomUUID } from 'crypto'
 
 export class InMemoryPetsRepository implements PetsRepository {
@@ -23,11 +23,27 @@ export class InMemoryPetsRepository implements PetsRepository {
     return pet
   }
 
-  async findManyForAdoption(orgsId: string[]) {
+  async findManyForAdoption(orgsId: string[], query: Query) {
     // get all pets into orgsId and that are not adopted
-    const pets = this.items.filter(
+    let pets = this.items.filter(
       (item) => orgsId.includes(item.org_id) && !item.adopted_at,
     )
+
+    // filter by age
+    if (query.age) {
+      pets = pets.filter((item) => item.age === query.age)
+    }
+
+    // filter by height
+    if (query.height) {
+      pets = pets.filter((item) => item.height === query.height)
+    }
+
+    // filter by weight
+    if (query.weight) {
+      pets = pets.filter((item) => item.weight === query.weight)
+    }
+
     return pets
   }
 }
