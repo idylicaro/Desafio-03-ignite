@@ -2,9 +2,9 @@ import { makeGetOrgProfileUseCase } from '@/use-cases/factories/make-get-org-pro
 import { FastifyRequest, FastifyReply } from 'fastify'
 
 export async function profile(request: FastifyRequest, reply: FastifyReply) {
-  const service = makeGetOrgProfileUseCase()
+  const getOrgProfileUseCase = makeGetOrgProfileUseCase()
 
-  const { org } = await service.execute({
+  const { org } = await getOrgProfileUseCase.execute({
     orgId: request.user.sub,
   })
 
