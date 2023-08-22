@@ -59,4 +59,32 @@ describe('Get Org Profile Service', () => {
       }),
     ).rejects.toBeInstanceOf(OrgsByCityNotFoundError)
   })
+
+  it('should empty array if not pets able to adopt', async () => {
+    const org = await orgsRepository.create({
+      name: 'org1 name',
+      email: 'org1@mail.com',
+      city: 'org1 city',
+      state: 'org1 state',
+      address: 'org1 address',
+      address_number: 'org1 address_number',
+      password_hash: 'org1 password_hash',
+      phone: 'org1 phone',
+    })
+
+    await petsRepository.create({
+      name: 'pet1 name',
+      age: 1,
+      org_id: org.id,
+      height: 1,
+      weight: 1,
+      adopted_at: new Date(),
+    })
+
+    const { pets } = await sut.execute({
+      query: 'org1 city',
+    })
+
+    expect(pets).toEqual([])
+  })
 })
