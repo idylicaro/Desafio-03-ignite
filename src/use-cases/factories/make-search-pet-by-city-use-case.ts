@@ -2,7 +2,7 @@ import { PrismaOrgsRepository } from '@/repositories/prisma/prisma-orgs-reposito
 import { PrismaPetsRepository } from '@/repositories/prisma/prisma-pets-repository'
 import { SearchPetsByCityUseCase } from '../search-pet-by-city'
 
-export function makeSearchPetsByCityUseCase() {
+export function makeSearchPetByCityUseCase() {
   const orgsRepository = new PrismaOrgsRepository()
   const petsRepository = new PrismaPetsRepository()
 

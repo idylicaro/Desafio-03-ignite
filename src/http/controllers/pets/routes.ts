@@ -3,6 +3,7 @@ import { verifyOrgRole } from '@/http/middlewares/verify-role-org'
 import { FastifyInstance } from 'fastify'
 
 import { create } from './create'
+import { search } from './search'
 
 export async function petsRoutes(app: FastifyInstance) {
   app.post(
@@ -12,4 +13,6 @@ export async function petsRoutes(app: FastifyInstance) {
     },
     create,
   )
+
+  app.get('/pets/search', search)
 }
