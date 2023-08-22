@@ -22,4 +22,12 @@ export class InMemoryPetsRepository implements PetsRepository {
 
     return pet
   }
+
+  async findManyForAdoption(orgsId: string[]) {
+    // get all pets into orgsId and that are not adopted
+    const pets = this.items.filter(
+      (item) => orgsId.includes(item.org_id) && !item.adopted_at,
+    )
+    return pets
+  }
 }
