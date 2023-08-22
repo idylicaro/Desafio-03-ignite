@@ -21,6 +21,7 @@ export class PrismaPetsRepository implements PetsRepository {
         org_id: {
           in: orgsId,
         },
+        adopted_at: null,
       },
     })
 
