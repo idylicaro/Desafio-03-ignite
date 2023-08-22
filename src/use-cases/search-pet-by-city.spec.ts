@@ -2,6 +2,8 @@ import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-
 import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pet-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { SearchPetsByCityUseCase } from './search-pet-by-city'
+import { OrgsByCityNotFoundError } from './errors/org-by-city-not-found-error'
+import { QueryNotInformedError } from './errors/query-not-Informed-error'
 
 let orgsRepository: InMemoryOrgsRepository
 let petsRepository: InMemoryPetsRepository
@@ -40,5 +42,21 @@ describe('Get Org Profile Service', () => {
 
     expect(pets).toEqual([pet])
     expect(pets).toHaveLength(1)
+  })
+
+  it('should not be able to search pets by city with not informed query', async () => {
+    await expect(() =>
+      sut.execute({
+        query: '',
+      }),
+    ).rejects.toBeInstanceOf(QueryNotInformedError)
+  })
+
+  it('should not be able to search pets by city with wrong query', async () => {
+    await expect(() =>
+      sut.execute({
+        query: 'non-existing-query',
+      }),
+    ).rejects.toBeInstanceOf(OrgsByCityNotFoundError)
   })
 })
