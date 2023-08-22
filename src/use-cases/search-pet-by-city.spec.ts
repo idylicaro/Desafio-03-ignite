@@ -37,7 +37,7 @@ describe('Get Org Profile Service', () => {
     })
 
     const { pets } = await sut.execute({
-      query: 'org1 city',
+      query: { city: 'org1 city' },
     })
 
     expect(pets).toEqual([pet])
@@ -47,7 +47,7 @@ describe('Get Org Profile Service', () => {
   it('should not be able to search pets by city with not informed query', async () => {
     await expect(() =>
       sut.execute({
-        query: '',
+        query: { city: '' },
       }),
     ).rejects.toBeInstanceOf(QueryNotInformedError)
   })
@@ -55,7 +55,7 @@ describe('Get Org Profile Service', () => {
   it('should not be able to search pets by city with wrong query', async () => {
     await expect(() =>
       sut.execute({
-        query: 'non-existing-query',
+        query: { city: 'wrong city' },
       }),
     ).rejects.toBeInstanceOf(OrgsByCityNotFoundError)
   })
@@ -82,9 +82,45 @@ describe('Get Org Profile Service', () => {
     })
 
     const { pets } = await sut.execute({
-      query: 'org1 city',
+      query: { city: 'org1 city' },
     })
 
     expect(pets).toEqual([])
+  })
+
+  it('should be able to search pets by city with age', async () => {
+    const org = await orgsRepository.create({
+      name: 'org1 name',
+      email: 'org1@mail.com',
+      city: 'org1 city',
+      state: 'org1 state',
+      address: 'org1 address',
+      address_number: 'org1 address_number',
+      password_hash: 'org1 password_hash',
+      phone: 'org1 phone',
+    })
+
+    await petsRepository.create({
+      name: 'pet1 name',
+      age: 1,
+      org_id: org.id,
+      height: 1,
+      weight: 1,
+    })
+
+    await petsRepository.create({
+      name: 'pet2 name',
+      age: 2,
+      org_id: org.id,
+      height: 2,
+      weight: 2,
+    })
+
+    const { pets } = await sut.execute({
+      query: { city: 'org1 city', age: 1 },
+    })
+    console.log(pets)
+
+    expect(pets).toHaveLength(1)
   })
 })
