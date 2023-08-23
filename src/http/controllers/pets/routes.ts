@@ -4,6 +4,7 @@ import { FastifyInstance } from 'fastify'
 
 import { create } from './create'
 import { search } from './search'
+import { profile } from './profile'
 
 export async function petsRoutes(app: FastifyInstance) {
   app.post(
@@ -15,4 +16,5 @@ export async function petsRoutes(app: FastifyInstance) {
   )
 
   app.get('/pets/search', search)
+  app.get('/pets/:petId', profile)
 }

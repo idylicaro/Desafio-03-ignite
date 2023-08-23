@@ -17,7 +17,7 @@ export async function search(request: FastifyRequest, reply: FastifyReply) {
   try {
     const searchPetByCityUseCase = makeSearchPetByCityUseCase()
     const pets = await searchPetByCityUseCase.execute({ query })
-    return reply.status(200).send({ pets })
+    return reply.status(200).send(pets)
   } catch (err) {
     if (err instanceof QueryNotInformedError) {
       return reply.status(400).send({ message: err.message })

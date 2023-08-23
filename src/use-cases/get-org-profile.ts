@@ -1,6 +1,6 @@
 import { OrgsRepository } from '@/repositories/orgs-repository'
 import { Org } from '@prisma/client'
-import { OrgNotFoundError } from './errors/org-not-found-error'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface GetOrgProfileUseCaseRequest {
   orgId: string
@@ -19,7 +19,7 @@ export class GetOrgProfileUseCase {
     const org = await this.orgsRepository.findById(orgId)
 
     if (!org) {
-      throw new OrgNotFoundError()
+      throw new ResourceNotFoundError()
     }
 
     return {
