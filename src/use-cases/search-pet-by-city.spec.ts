@@ -1,5 +1,5 @@
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-reporitory'
-import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pet-repository'
+import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { SearchPetsByCityUseCase } from './search-pet-by-city'
 import { OrgsByCityNotFoundError } from './errors/org-by-city-not-found-error'
@@ -119,7 +119,6 @@ describe('Get Org Profile Service', () => {
     const { pets } = await sut.execute({
       query: { city: 'org1 city', age: 1 },
     })
-    console.log(pets)
 
     expect(pets).toHaveLength(1)
   })

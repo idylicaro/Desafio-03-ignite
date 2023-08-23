@@ -2,7 +2,7 @@ import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-
 import { GetOrgProfileUseCase } from './get-org-profile'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { hash } from 'bcryptjs'
-import { OrgNotFoundError } from './errors/org-not-found-error'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 let repository: InMemoryOrgsRepository
 let service: GetOrgProfileUseCase
@@ -38,6 +38,6 @@ describe('Get Org Profile Service', () => {
       service.execute({
         orgId: 'non-existing-id',
       }),
-    ).rejects.toBeInstanceOf(OrgNotFoundError)
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   })
 })

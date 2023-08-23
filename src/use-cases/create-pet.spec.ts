@@ -1,8 +1,8 @@
 import { expect, describe, it, beforeEach } from 'vitest'
 import { InMemoryOrgsRepository } from '@/repositories/in-memory/in-memory-orgs-reporitory'
 import { CreatePetUseCase } from './create-pet'
-import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pet-repository'
-import { OrgNotFoundError } from './errors/org-not-found-error'
+import { InMemoryPetsRepository } from '@/repositories/in-memory/in-memory-pets-repository'
+import { OrgNotFoundError } from './errors/resource-not-found-error'
 
 let orgsRepository: InMemoryOrgsRepository
 let petsRepository: InMemoryPetsRepository
