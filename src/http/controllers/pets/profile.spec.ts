@@ -2,7 +2,6 @@ import request from 'supertest'
 import { app } from '@/app'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { createAndAuthenticateOrg } from '@/utils/test/create-and-authenticate-org'
-import { beforeEach } from 'node:test'
 
 describe('Pet Profile (e2e)', () => {
   beforeAll(async () => {
